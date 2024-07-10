@@ -1,0 +1,349 @@
+The Leetcode file system keeps a log each time some user performs a change folder operation.
+
+The operations are described below:
+
+"../" : Move to the parent folder of the current folder. (If you are already in the main folder, remain in the same folder).
+"./" : Remain in the same folder.
+"x/" : Move to the child folder named x (This folder is guaranteed to always exist).
+You are given a list of strings logs where logs[i] is the operation performed by the user at the ith step.
+
+The file system starts in the main folder, then the operations in logs are performed.
+
+Return the minimum number of operations needed to go back to the main folder after the change folder operations.
+
+ 
+
+Example 1:
+
+
+
+Input: logs = ["d1/","d2/","../","d21/","./"]
+Output: 2
+Explanation: Use this change folder operation "../" 2 times and go back to the main folder.
+Example 2:
+
+
+
+Input: logs = ["d1/","d2/","./","d3/","../","d31/"]
+Output: 3
+Example 3:
+
+Input: logs = ["d1/","../","../","../"]
+Output: 0
+ 
+
+Constraints:
+
+1 <= logs.length <= 103
+2 <= logs[i].length <= 10
+logs[i] contains lowercase English letters, digits, '.', and '/'.
+logs[i] follows the format described in the statement.
+Folder names consist of lowercase English letters and digits.
+
+
+ans=====
+
+class Solution {
+    public int minOperations(String[] logs) {
+        int count=0;
+
+        for(int a=0;a<logs.length;a++){
+            if(logs[a].equals("../")){
+                System.out.println(logs[a]);
+               if(count>0){
+                    count--;
+               }
+                
+             System.out.println(count);
+            } else if(logs[a].equals("./")){
+                 System.out.println(logs[a]);
+                continue;
+            }else{
+                 System.out.println(logs[a]);
+                count++;
+                System.out.println(count);
+            }
+        }
+       return Math.max(count,0); 
+    }
+}
+
+
+
+
+************************************************
+
+
+
+You are given two arrays of equal length, nums1 and nums2.
+
+Each element in nums1 has been increased (or decreased in the case of negative) by an integer, represented by the variable x.
+
+As a result, nums1 becomes equal to nums2. Two arrays are considered equal when they contain the same integers with the same frequencies.
+
+Return the integer x.
+
+ 
+
+Example 1:
+
+Input: nums1 = [2,6,4], nums2 = [9,7,5]
+
+Output: 3
+
+Explanation:
+
+The integer added to each element of nums1 is 3.
+
+Example 2:
+
+Input: nums1 = [10], nums2 = [5]
+
+Output: -5
+
+Explanation:
+
+The integer added to each element of nums1 is -5.
+
+Example 3:
+
+Input: nums1 = [1,1,1,1], nums2 = [1,1,1,1]
+
+Output: 0
+
+Explanation:
+
+The integer added to each element of nums1 is 0.
+
+ 
+
+Constraints:
+
+1 <= nums1.length == nums2.length <= 100
+0 <= nums1[i], nums2[i] <= 1000
+The test cases are generated in a way that there is an integer x such that nums1 can become equal to nums2 by adding x to each element of nums1.
+
+
+
+ans
+
+class Solution {
+    public int addedInteger(int[] nums1, int[] nums2) {
+
+        int ans=0;
+
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        
+        ans=nums2[0]-nums1[0];
+        
+       return ans; 
+    }
+}
+
+
+********************************
+
+
+
+
+
+You are given a 0-indexed array words consisting of distinct strings.
+
+The string words[i] can be paired with the string words[j] if:
+
+The string words[i] is equal to the reversed string of words[j].
+0 <= i < j < words.length.
+Return the maximum number of pairs that can be formed from the array words.
+
+Note that each string can belong in at most one pair.
+
+ 
+
+Example 1:
+
+Input: words = ["cd","ac","dc","ca","zz"]
+Output: 2
+Explanation: In this example, we can form 2 pair of strings in the following way:
+- We pair the 0th string with the 2nd string, as the reversed string of word[0] is "dc" and is equal to words[2].
+- We pair the 1st string with the 3rd string, as the reversed string of word[1] is "ca" and is equal to words[3].
+It can be proven that 2 is the maximum number of pairs that can be formed.
+Example 2:
+
+Input: words = ["ab","ba","cc"]
+Output: 1
+Explanation: In this example, we can form 1 pair of strings in the following way:
+- We pair the 0th string with the 1st string, as the reversed string of words[1] is "ab" and is equal to words[0].
+It can be proven that 1 is the maximum number of pairs that can be formed.
+Example 3:
+
+Input: words = ["aa","ab"]
+Output: 0
+Explanation: In this example, we are unable to form any pair of strings.
+ 
+
+Constraints:
+
+1 <= words.length <= 50
+words[i].length == 2
+words consists of distinct strings.
+words[i] contains only lowercase English letters.
+
+
+ans
+
+
+
+class Solution {
+    public int maximumNumberOfStringPairs(String[] words) {
+
+        int count=0;
+
+        for(int a=0;a<words.length;a++){
+            String word1=words[a];
+            int length=word1.length();
+            String reverse="";
+            for(int b=length-1;b>=0;b--){
+                reverse+=word1.charAt(b);
+            }
+
+            for(int c=0;c<words.length;c++){
+                if(c!=a){
+                    String word2=words[c];
+                if(reverse.equals(word2)){
+                    count++;
+                }
+                }
+                
+            }
+        }
+        return count/2;
+    }
+}
+
+
+**************************************************************
+
+
+You are given a 0-indexed string s that has lowercase English letters in its even indices and digits in its odd indices.
+
+There is a function shift(c, x), where c is a character and x is a digit, that returns the xth character after c.
+
+For example, shift('a', 5) = 'f' and shift('x', 0) = 'x'.
+For every odd index i, you want to replace the digit s[i] with shift(s[i-1], s[i]).
+
+Return s after replacing all digits. It is guaranteed that shift(s[i-1], s[i]) will never exceed 'z'.
+
+ 
+
+Example 1:
+
+Input: s = "a1c1e1"
+Output: "abcdef"
+Explanation: The digits are replaced as follows:
+- s[1] -> shift('a',1) = 'b'
+- s[3] -> shift('c',1) = 'd'
+- s[5] -> shift('e',1) = 'f'
+Example 2:
+
+Input: s = "a1b2c3d4e"
+Output: "abbdcfdhe"
+Explanation: The digits are replaced as follows:
+- s[1] -> shift('a',1) = 'b'
+- s[3] -> shift('b',2) = 'd'
+- s[5] -> shift('c',3) = 'f'
+- s[7] -> shift('d',4) = 'h'
+ 
+
+Constraints:
+
+1 <= s.length <= 100
+s consists only of lowercase English letters and digits.
+shift(s[i-1], s[i]) <= 'z' for all odd indices i.
+
+
+ans:
+
+
+class Solution {
+    public String replaceDigits(String s) {
+
+        int length=s.length();
+        String ans="";
+        for(int a=0;a<length;a++){
+            char b=s.charAt(a);
+            System.out.println(b);
+            int intw=(int)b;
+            System.out.println(intw);
+
+            if(intw<97){
+                System.out.println("inside");
+                int pre=(int) s.charAt(a-1);
+                intw=s.charAt(a)-'0';
+                System.out.println(pre);
+                intw+=pre;
+
+            }
+            ans=ans+(char)intw;
+            System.out.println(ans);
+            
+
+        }
+        return ans;
+    }
+}
+
+
+****************************************************************
+
+
+You are given a 1-indexed integer array nums of length n.
+
+An element nums[i] of nums is called special if i divides n, i.e. n % i == 0.
+
+Return the sum of the squares of all special elements of nums.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4]
+Output: 21
+Explanation: There are exactly 3 special elements in nums: nums[1] since 1 divides 4, nums[2] since 2 divides 4, and nums[4] since 4 divides 4. 
+Hence, the sum of the squares of all special elements of nums is nums[1] * nums[1] + nums[2] * nums[2] + nums[4] * nums[4] = 1 * 1 + 2 * 2 + 4 * 4 = 21.  
+Example 2:
+
+Input: nums = [2,7,1,19,18,3]
+Output: 63
+Explanation: There are exactly 4 special elements in nums: nums[1] since 1 divides 6, nums[2] since 2 divides 6, nums[3] since 3 divides 6, and nums[6] since 6 divides 6. 
+Hence, the sum of the squares of all special elements of nums is nums[1] * nums[1] + nums[2] * nums[2] + nums[3] * nums[3] + nums[6] * nums[6] = 2 * 2 + 7 * 7 + 1 * 1 + 3 * 3 = 63. 
+ 
+
+Constraints:
+
+1 <= nums.length == n <= 50
+1 <= nums[i] <= 50
+
+
+ans:
+
+
+class Solution {
+    public int sumOfSquares(int[] nums) {
+       int length=nums.length;
+
+       int ans=0;
+
+       for(int a=1;a<=length;a++){
+
+        if(length%a==0){
+            int no=nums[a-1];
+            ans=ans+(no*no);
+        }
+
+       } 
+
+     return ans;   
+    }
+}
