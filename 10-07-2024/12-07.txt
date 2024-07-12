@@ -1,0 +1,215 @@
+You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. If a string is longer than the other, append the additional letters onto the end of the merged string.
+
+Return the merged string.
+
+ 
+
+Example 1:
+
+Input: word1 = "abc", word2 = "pqr"
+Output: "apbqcr"
+Explanation: The merged string will be merged as so:
+word1:  a   b   c
+word2:    p   q   r
+merged: a p b q c r
+Example 2:
+
+Input: word1 = "ab", word2 = "pqrs"
+Output: "apbqrs"
+Explanation: Notice that as word2 is longer, "rs" is appended to the end.
+word1:  a   b 
+word2:    p   q   r   s
+merged: a p b q   r   s
+Example 3:
+
+Input: word1 = "abcd", word2 = "pq"
+Output: "apbqcd"
+Explanation: Notice that as word1 is longer, "cd" is appended to the end.
+word1:  a   b   c   d
+word2:    p   q 
+merged: a p b q c   d
+ 
+
+Constraints:
+
+1 <= word1.length, word2.length <= 100
+word1 and word2 consist of lowercase English letters.
+
+
+ans:
+
+class Solution {
+    public String mergeAlternately(String word1, String word2) {
+
+        int a=0;
+        int b=0;
+
+        StringBuilder ans=new StringBuilder();
+
+        while(a<word1.length() && b<word2.length()){
+            ans.append(word1.charAt(a++));
+            ans.append(word2.charAt(b++));
+        }
+
+        while(a<word1.length()){
+            ans.append(word1.charAt(a++));
+        }
+
+        while(b<word2.length()){
+            ans.append(word2.charAt(b++));
+        }
+    
+        return ans.toString();
+    }
+}
+
+**************************************************************************
+
+
+3168. Minimum Number of Chairs in a Waiting Room
+Solved
+Easy
+Topics
+Companies
+Hint
+You are given a string s. Simulate events at each second i:
+
+If s[i] == 'E', a person enters the waiting room and takes one of the chairs in it.
+If s[i] == 'L', a person leaves the waiting room, freeing up a chair.
+Return the minimum number of chairs needed so that a chair is available for every person who enters the waiting room given that it is initially empty.
+
+ 
+
+Example 1:
+
+Input: s = "EEEEEEE"
+
+Output: 7
+
+Explanation:
+
+After each second, a person enters the waiting room and no person leaves it. Therefore, a minimum of 7 chairs is needed.
+
+Example 2:
+
+Input: s = "ELELEEL"
+
+Output: 2
+
+Explanation:
+
+Let's consider that there are 2 chairs in the waiting room. The table below shows the state of the waiting room at each second.
+
+Second	Event	People in the Waiting Room	Available Chairs
+0	Enter	1	1
+1	Leave	0	2
+2	Enter	1	1
+3	Leave	0	2
+4	Enter	1	1
+5	Enter	2	0
+6	Leave	1	1
+Example 3:
+
+Input: s = "ELEELEELLL"
+
+Output: 3
+
+Explanation:
+
+Let's consider that there are 3 chairs in the waiting room. The table below shows the state of the waiting room at each second.
+
+Second	Event	People in the Waiting Room	Available Chairs
+0	Enter	1	2
+1	Leave	0	3
+2	Enter	1	2
+3	Enter	2	1
+4	Leave	1	2
+5	Enter	2	1
+6	Enter	3	0
+7	Leave	2	1
+8	Leave	1	2
+9	Leave	0	3
+ 
+
+Constraints:
+
+1 <= s.length <= 50
+s consists only of the letters 'E' and 'L'.
+s represents a valid sequence of entries and exits.
+
+
+ans:
+
+class Solution {
+    public int minimumChairs(String s) {
+
+        int count=0;
+        int chairs=0;
+
+        for(int a=0;a<s.length();a++){
+
+            if(s.charAt(a)=='E'){
+                count++;
+            }else if(s.charAt(a)=='L'){
+                count--;
+            }
+            chairs=Math.max(chairs,count);
+        }
+      return chairs;  
+    }
+}
+
+*******************************************************************************************
+
+
+2119. A Number After a Double Reversal
+Solved
+Easy
+Topics
+Companies
+Hint
+Reversing an integer means to reverse all its digits.
+
+For example, reversing 2021 gives 1202. Reversing 12300 gives 321 as the leading zeros are not retained.
+Given an integer num, reverse num to get reversed1, then reverse reversed1 to get reversed2. Return true if reversed2 equals num. Otherwise return false.
+
+ 
+
+Example 1:
+
+Input: num = 526
+Output: true
+Explanation: Reverse num to get 625, then reverse 625 to get 526, which equals num.
+Example 2:
+
+Input: num = 1800
+Output: false
+Explanation: Reverse num to get 81, then reverse 81 to get 18, which does not equal num.
+Example 3:
+
+Input: num = 0
+Output: true
+Explanation: Reverse num to get 0, then reverse 0 to get 0, which equals num.
+ 
+
+Constraints:
+
+0 <= num <= 106
+
+
+ans:
+
+class Solution {
+    public boolean isSameAfterReversals(int num) {
+
+        boolean flag=false;
+
+        if(num%10!=0 || num==0){
+            flag=true;
+        }
+       return flag; 
+    }
+}
+
+
+****************************************************************************************************
