@@ -1,0 +1,231 @@
+1827. Minimum Operations to Make the Array Increasing
+Easy
+Topics
+Companies
+Hint
+You are given an integer array nums (0-indexed). In one operation, you can choose an element of the array and increment it by 1.
+
+For example, if nums = [1,2,3], you can choose to increment nums[1] to make nums = [1,3,3].
+Return the minimum number of operations needed to make nums strictly increasing.
+
+An array nums is strictly increasing if nums[i] < nums[i+1] for all 0 <= i < nums.length - 1. An array of length 1 is trivially strictly increasing.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,1]
+Output: 3
+Explanation: You can do the following operations:
+1) Increment nums[2], so nums becomes [1,1,2].
+2) Increment nums[1], so nums becomes [1,2,2].
+3) Increment nums[2], so nums becomes [1,2,3].
+Example 2:
+
+Input: nums = [1,5,2,4,1]
+Output: 14
+Example 3:
+
+Input: nums = [8]
+Output: 0
+ 
+
+Constraints:
+
+1 <= nums.length <= 5000
+1 <= nums[i] <= 104
+
+
+ans::
+
+class Solution {
+    public int minOperations(int[] nums) {
+
+        int ans=0;
+
+        for(int a=1;a<nums.length;a++){
+            int pre=nums[a-1];
+            int no=nums[a];
+
+            if(pre>=no){
+                int noo=(pre+1)-no;
+                nums[a]=no+noo;
+                ans+=noo;
+            }
+
+        }
+       return ans; 
+    }
+}
+
+**************************************************************************************
+
+
+1309. Decrypt String from Alphabet to Integer Mapping
+Easy
+Topics
+Companies
+Hint
+You are given a string s formed by digits and '#'. We want to map s to English lowercase characters as follows:
+
+Characters ('a' to 'i') are represented by ('1' to '9') respectively.
+Characters ('j' to 'z') are represented by ('10#' to '26#') respectively.
+Return the string formed after mapping.
+
+The test cases are generated so that a unique mapping will always exist.
+
+ 
+
+Example 1:
+
+Input: s = "10#11#12"
+Output: "jkab"
+Explanation: "j" -> "10#" , "k" -> "11#" , "a" -> "1" , "b" -> "2".
+Example 2:
+
+Input: s = "1326#"
+Output: "acz"
+ 
+
+Constraints:
+
+1 <= s.length <= 1000
+s consists of digits and the '#' letter.
+s will be a valid string such that mapping is always possible.
+
+
+ans:
+
+class Solution {
+    public String freqAlphabets(String s) {
+        int point=0;
+        StringBuilder ans=new StringBuilder();
+        while(point<s.length()){
+
+            if(point+2<s.length() && s.charAt(point+2)=='#'){
+                String str= s.substring(point,point+2);
+                ans.append((char)('j'+(Integer.parseInt(str)-10)));
+                point+=3;
+            } else{
+                ans.append((char)('a'+(s.charAt(point)-'1')));
+                point++;
+            }
+
+        }
+        return ans.toString();
+    }
+}
+
+***************************************************
+
+
+
+2176. Count Equal and Divisible Pairs in an Array
+Easy
+Topics
+Companies
+Hint
+Given a 0-indexed integer array nums of length n and an integer k, return the number of pairs (i, j) where 0 <= i < j < n, such that nums[i] == nums[j] and (i * j) is divisible by k.
+ 
+
+Example 1:
+
+Input: nums = [3,1,2,2,2,1,3], k = 2
+Output: 4
+Explanation:
+There are 4 pairs that meet all the requirements:
+- nums[0] == nums[6], and 0 * 6 == 0, which is divisible by 2.
+- nums[2] == nums[3], and 2 * 3 == 6, which is divisible by 2.
+- nums[2] == nums[4], and 2 * 4 == 8, which is divisible by 2.
+- nums[3] == nums[4], and 3 * 4 == 12, which is divisible by 2.
+Example 2:
+
+Input: nums = [1,2,3,4], k = 1
+Output: 0
+Explanation: Since no value in nums is repeated, there are no pairs (i,j) that meet all the requirements.
+
+ans:
+
+class Solution {
+    public int countPairs(int[] nums, int k) {
+
+        int count=0;
+
+        for(int a=0;a<nums.length-1;a++){
+            int no = nums[a];
+
+            for(int b=a+1;b<nums.length;b++){
+                 int advno = nums[b];
+
+                 
+            if(no==advno && (a*b)%k==0){
+                count++;
+            }
+
+
+            }
+           
+
+        }
+       return count; 
+    }
+}
+
+*******************************************************************************
+
+2553. Separate the Digits in an Array
+Easy
+Topics
+Companies
+Hint
+Given an array of positive integers nums, return an array answer that consists of the digits of each integer in nums after separating them in the same order they appear in nums.
+
+To separate the digits of an integer is to get all the digits it has in the same order.
+
+For example, for the integer 10921, the separation of its digits is [1,0,9,2,1].
+ 
+
+Example 1:
+
+Input: nums = [13,25,83,77]
+Output: [1,3,2,5,8,3,7,7]
+Explanation: 
+- The separation of 13 is [1,3].
+- The separation of 25 is [2,5].
+- The separation of 83 is [8,3].
+- The separation of 77 is [7,7].
+answer = [1,3,2,5,8,3,7,7]. Note that answer contains the separations in the same order.
+Example 2:
+
+Input: nums = [7,1,3,9]
+Output: [7,1,3,9]
+Explanation: The separation of each integer in nums is itself.
+answer = [7,1,3,9].
+ 
+ans:
+
+class Solution {
+    public int[] separateDigits(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        
+        for (int num : nums) {
+            String numStr = String.valueOf(num);
+            for (char ch : numStr.toCharArray()) {
+                result.add(Character.getNumericValue(ch));
+            }
+        }
+        
+        // Convert List<Integer> to int[]
+        int[] answer = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            answer[i] = result.get(i);
+        }
+        
+        return answer;
+    }
+}
+
+********************************************************************************
+
+
+
