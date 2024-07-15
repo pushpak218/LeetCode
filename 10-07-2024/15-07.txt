@@ -1,0 +1,264 @@
+2427. Number of Common Factors
+Easy
+Topics
+Companies
+Hint
+Given two positive integers a and b, return the number of common factors of a and b.
+
+An integer x is a common factor of a and b if x divides both a and b.
+
+ 
+
+Example 1:
+
+Input: a = 12, b = 6
+Output: 4
+Explanation: The common factors of 12 and 6 are 1, 2, 3, 6.
+Example 2:
+
+Input: a = 25, b = 30
+Output: 2
+Explanation: The common factors of 25 and 30 are 1, 5.
+ 
+
+Constraints:
+
+1 <= a, b <= 1000
+
+
+ans::
+
+class Solution {
+    public int commonFactors(int a, int b) {
+
+        int count=0;
+        
+
+        for(int c =1;c<=Math.min(a,b);c++){
+            if(a%c==0 && b%c==0){
+                hcd=Math.max(hcd,c);
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
+
+******************************************************************
+
+
+2215. Find the Difference of Two Arrays
+Easy
+Topics
+Companies
+Hint
+Given two 0-indexed integer arrays nums1 and nums2, return a list answer of size 2 where:
+
+answer[0] is a list of all distinct integers in nums1 which are not present in nums2.
+answer[1] is a list of all distinct integers in nums2 which are not present in nums1.
+Note that the integers in the lists may be returned in any order.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,3], nums2 = [2,4,6]
+Output: [[1,3],[4,6]]
+Explanation:
+For nums1, nums1[1] = 2 is present at index 0 of nums2, whereas nums1[0] = 1 and nums1[2] = 3 are not present in nums2. Therefore, answer[0] = [1,3].
+For nums2, nums2[0] = 2 is present at index 1 of nums1, whereas nums2[1] = 4 and nums2[2] = 6 are not present in nums2. Therefore, answer[1] = [4,6].
+Example 2:
+
+Input: nums1 = [1,2,3,3], nums2 = [1,1,2,2]
+Output: [[3],[]]
+Explanation:
+For nums1, nums1[2] and nums1[3] are not present in nums2. Since nums1[2] == nums1[3], their value is only included once and answer[0] = [3].
+Every integer in nums2 is present in nums1. Therefore, answer[1] = [].
+ 
+
+Constraints:
+
+1 <= nums1.length, nums2.length <= 1000
+-1000 <= nums1[i], nums2[i] <= 1000
+
+
+ans::
+
+class Solution {
+    public List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
+
+       // List<Integer>num1=new ArrayList<>();
+        Set<Integer>num1=new HashSet<>();
+        for(int a:nums1){
+            num1.add(a);
+        }
+        
+       // List<Integer>num2=new ArrayList<>();
+        Set<Integer>num2=new HashSet<>();
+        for(int a:nums2){
+            num2.add(a);
+        }
+
+        List<Integer> add1=new ArrayList<>();
+         List<Integer> add2=new ArrayList<>();
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int a:num1){
+            if(!num2.contains(a)){
+                add1.add(a);
+            }
+             
+        }
+      // ans.add(add);
+
+        for(int a:num2){
+            if(!num1.contains(a)){
+                add2.add(a);
+            }
+              
+        }
+    ans.add(add1);
+    ans.add(add2);
+      
+        return ans;
+    }
+}
+
+***************************************************************
+
+
+
+3005. Count Elements With Maximum Frequency
+Easy
+Topics
+Companies
+Hint
+You are given an array nums consisting of positive integers.
+
+Return the total frequencies of elements in nums such that those elements all have the maximum frequency.
+
+The frequency of an element is the number of occurrences of that element in the array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,2,3,1,4]
+Output: 4
+Explanation: The elements 1 and 2 have a frequency of 2 which is the maximum frequency in the array.
+So the number of elements in the array with maximum frequency is 4.
+Example 2:
+
+Input: nums = [1,2,3,4,5]
+Output: 5
+Explanation: All elements of the array have a frequency of 1 which is the maximum.
+So the number of elements in the array with maximum frequency is 5.
+ 
+
+Constraints:
+
+1 <= nums.length <= 100
+1 <= nums[i] <= 100
+
+
+ans::
+
+class Solution {
+    public int maxFrequencyElements(int[] nums) {
+
+        Map<Integer,Integer> map=new HashMap<>();
+       
+        int highfrq=0;
+        int ans=0;
+        for(int a:nums){
+              int frq=0;
+            for(int b=0;b<nums.length;b++){
+               
+                if(a==nums[b]){
+                    frq++;
+                }
+                map.put(a,frq);
+                highfrq=Math.max(highfrq,frq);
+            }
+        }
+
+        System.out.println(map);
+        System.out.println(highfrq);
+
+        for(int a:map.values()){
+            if(a==highfrq){
+                ans+=highfrq;
+            }
+        }
+
+
+
+
+
+        return ans;
+        
+    }
+}
+
+************************************************
+
+
+728. Self Dividing Numbers
+Easy
+Topics
+Companies
+Hint
+A self-dividing number is a number that is divisible by every digit it contains.
+
+For example, 128 is a self-dividing number because 128 % 1 == 0, 128 % 2 == 0, and 128 % 8 == 0.
+A self-dividing number is not allowed to contain the digit zero.
+
+Given two integers left and right, return a list of all the self-dividing numbers in the range [left, right].
+
+ 
+
+Example 1:
+
+Input: left = 1, right = 22
+Output: [1,2,3,4,5,6,7,8,9,11,12,15,22]
+Example 2:
+
+Input: left = 47, right = 85
+Output: [48,55,66,77]
+ 
+
+Constraints:
+
+1 <= left <= right <= 104
+
+ans::
+
+class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+
+        int no=0;
+        List<Integer>ans=new ArrayList<>();
+        for(int a=left;a<=right;a++){
+            if(a%10!=0){
+                no=a;
+                boolean flag=true;
+                while(no>0  && flag==true){
+                    int temp=no%10;
+                    if( a==0 || a%temp!=0){
+                        flag=false;
+                    }
+                    no=no/10;
+                    
+                }
+
+                if(flag==true){
+                    ans.add(a);
+                }
+                
+            }
+        }
+        return ans;
+    }
+}
+
+************************************************************************
