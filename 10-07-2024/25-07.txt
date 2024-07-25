@@ -1,0 +1,285 @@
+2181. Merge Nodes in Between Zeros
+Solved
+Medium
+Topics
+Companies
+Hint
+You are given the head of a linked list, which contains a series of integers separated by 0's. The beginning and end of the linked list will have Node.val == 0.
+
+For every two consecutive 0's, merge all the nodes lying in between them into a single node whose value is the sum of all the merged nodes. The modified list should not contain any 0's.
+
+Return the head of the modified linked list.
+
+ 
+
+Example 1:
+
+
+Input: head = [0,3,1,0,4,5,2,0]
+Output: [4,11]
+Explanation: 
+The above figure represents the given linked list. The modified list contains
+- The sum of the nodes marked in green: 3 + 1 = 4.
+- The sum of the nodes marked in red: 4 + 5 + 2 = 11.
+Example 2:
+
+
+Input: head = [0,1,0,3,0,2,2,0]
+Output: [1,3,4]
+Explanation: 
+The above figure represents the given linked list. The modified list contains
+- The sum of the nodes marked in green: 1 = 1.
+- The sum of the nodes marked in red: 3 = 3.
+- The sum of the nodes marked in yellow: 2 + 2 = 4.
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [3, 2 * 105].
+0 <= Node.val <= 1000
+There are no two consecutive nodes with Node.val == 0.
+The beginning and end of the linked list have Node.val == 0.
+
+ans::
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeNodes(ListNode head) {
+
+        ListNode ans=new ListNode(0);
+        ListNode current=ans;
+        ListNode node=head.next;
+        int sum=0;
+       
+         while(node!=null){
+                if(node.val==0){
+                    current.next=new ListNode(sum);
+                    current=current.next;
+                    sum=0;
+                }else{
+                    sum+=node.val;
+
+                }
+                node=node.next;
+             
+        
+       
+    }
+     return  ans.next;
+}}
+
+*********************************************************
+
+104. Maximum Depth of Binary Tree
+Easy
+Topics
+Companies
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+ 
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+Example 2:
+
+Input: root = [1,null,2]
+Output: 2
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 104].
+-100 <= Node.val <= 100
+
+ans::
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+
+         if (root == null) {
+            return 0;
+        }
+        
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        
+        return Math.max(leftDepth, rightDepth) + 1;  
+    }
+}
+**************************************************************
+
+657. Robot Return to Origin
+Attempted
+Easy
+Topics
+Companies
+There is a robot starting at the position (0, 0), the origin, on a 2D plane. Given a sequence of its moves, judge if this robot ends up at (0, 0) after it completes its moves.
+
+You are given a string moves that represents the move sequence of the robot where moves[i] represents its ith move. Valid moves are 'R' (right), 'L' (left), 'U' (up), and 'D' (down).
+
+Return true if the robot returns to the origin after it finishes all of its moves, or false otherwise.
+
+Note: The way that the robot is "facing" is irrelevant. 'R' will always make the robot move to the right once, 'L' will always make it move left, etc. Also, assume that the magnitude of the robot's movement is the same for each move.
+
+ 
+
+Example 1:
+
+Input: moves = "UD"
+Output: true
+Explanation: The robot moves up once, and then down once. All moves have the same magnitude, so it ended up at the origin where it started. Therefore, we return true.
+Example 2:
+
+Input: moves = "LL"
+Output: false
+Explanation: The robot moves left twice. It ends up two "moves" to the left of the origin. We return false because it is not at the origin at the end of its moves.
+ 
+
+Constraints:
+
+1 <= moves.length <= 2 * 104
+moves only contains the characters 'U', 'D', 'L' and 'R'.
+
+ans::
+class Solution {
+    public boolean judgeCircle(String moves) {
+
+       int x = 0, y = 0;
+        
+        for (char move : moves.toCharArray()) {
+            switch (move) {
+                case 'U': y++; break;
+                case 'D': y--; break;
+                case 'L': x--; break;
+                case 'R': x++; break;
+            }
+        }
+        
+        return x == 0 && y == 0; 
+    }
+}
+
+********************************************
+
+1502. Can Make Arithmetic Progression From Sequence
+Attempted
+Easy
+Topics
+Companies
+Hint
+A sequence of numbers is called an arithmetic progression if the difference between any two consecutive elements is the same.
+
+Given an array of numbers arr, return true if the array can be rearranged to form an arithmetic progression. Otherwise, return false.
+
+ 
+
+Example 1:
+
+Input: arr = [3,5,1]
+Output: true
+Explanation: We can reorder the elements as [1,3,5] or [5,3,1] with differences 2 and -2 respectively, between each consecutive elements.
+Example 2:
+
+Input: arr = [1,2,4]
+Output: false
+Explanation: There is no way to reorder the elements to obtain an arithmetic progression.
+ 
+
+Constraints:
+
+2 <= arr.length <= 1000
+-106 <= arr[i] <= 106
+
+ans:;
+
+class Solution {
+    public boolean canMakeArithmeticProgression(int[] arr) {
+
+        Arrays.sort(arr);
+
+        int diff=arr[1]-arr[0];
+        boolean flag=true;
+
+        for(int a=2;a<arr.length;a++){
+            if(arr[a]-arr[a-1]!=diff){
+                flag=false;
+            }
+        }
+      return flag;  
+    }
+}
+
+*******************************************
+
+628. Maximum Product of Three Numbers
+Easy
+Topics
+Companies
+Given an integer array nums, find three numbers whose product is maximum and return the maximum product.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3]
+Output: 6
+Example 2:
+
+Input: nums = [1,2,3,4]
+Output: 24
+Example 3:
+
+Input: nums = [-1,-2,-3]
+Output: -6
+ 
+
+Constraints:
+
+3 <= nums.length <= 104
+-1000 <= nums[i] <= 1000
+
+ans::class Solution {
+    public int maximumProduct(int[] nums) {
+       Arrays.sort(nums);
+        int n = nums.length;
+
+        // Case 1: Product of the three largest numbers
+        int max1 = nums[n - 1] * nums[n - 2] * nums[n - 3];
+
+        // Case 2: Product of the two smallest numbers and the largest number
+        int max2 = nums[0] * nums[1] * nums[n - 1];
+
+        // The maximum product will be the maximum of these two cases
+        return Math.max(max1, max2);
+    }
+}
+
+**************************************
