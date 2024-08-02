@@ -1,0 +1,128 @@
+2169. Count Operations to Obtain Zero
+Easy
+Topics
+Companies
+Hint
+You are given two non-negative integers num1 and num2.
+
+In one operation, if num1 >= num2, you must subtract num2 from num1, otherwise subtract num1 from num2.
+
+For example, if num1 = 5 and num2 = 4, subtract num2 from num1, thus obtaining num1 = 1 and num2 = 4. However, if num1 = 4 and num2 = 5, after one operation, num1 = 4 and num2 = 1.
+Return the number of operations required to make either num1 = 0 or num2 = 0.
+
+ 
+
+Example 1:
+
+Input: num1 = 2, num2 = 3
+Output: 3
+Explanation: 
+- Operation 1: num1 = 2, num2 = 3. Since num1 < num2, we subtract num1 from num2 and get num1 = 2, num2 = 3 - 2 = 1.
+- Operation 2: num1 = 2, num2 = 1. Since num1 > num2, we subtract num2 from num1.
+- Operation 3: num1 = 1, num2 = 1. Since num1 == num2, we subtract num2 from num1.
+Now num1 = 0 and num2 = 1. Since num1 == 0, we do not need to perform any further operations.
+So the total number of operations required is 3.
+Example 2:
+
+Input: num1 = 10, num2 = 10
+Output: 1
+Explanation: 
+- Operation 1: num1 = 10, num2 = 10. Since num1 == num2, we subtract num2 from num1 and get num1 = 10 - 10 = 0.
+Now num1 = 0 and num2 = 10. Since num1 == 0, we are done.
+So the total number of operations required is 1.
+ 
+
+Constraints:
+
+0 <= num1, num2 <= 105
+
+ans:
+
+class Solution {
+    public int countOperations(int num1, int num2) {
+
+        int count=0;
+
+        while(num1!=0 && num2!=0){
+            if(num1>num2){
+                num1=num1-num2;
+                count++;
+            }else{
+                num2=num2-num1;
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+*************************************************************
+
+
+2843. Count Symmetric Integers
+Easy
+Topics
+Companies
+Hint
+You are given two positive integers low and high.
+
+An integer x consisting of 2 * n digits is symmetric if the sum of the first n digits of x is equal to the sum of the last n digits of x. Numbers with an odd number of digits are never symmetric.
+
+Return the number of symmetric integers in the range [low, high].
+
+ 
+
+Example 1:
+
+Input: low = 1, high = 100
+Output: 9
+Explanation: There are 9 symmetric integers between 1 and 100: 11, 22, 33, 44, 55, 66, 77, 88, and 99.
+Example 2:
+
+Input: low = 1200, high = 1230
+Output: 4
+Explanation: There are 4 symmetric integers between 1200 and 1230: 1203, 1212, 1221, and 1230.
+ 
+
+Constraints:
+
+1 <= low <= high <= 104
+
+
+ans::
+
+class Solution {
+    public int countSymmetricIntegers(int low, int high) {
+
+        int count=0;
+
+        for(int a=low;a<=high;a++){
+            String no= String.valueOf(a);
+            int p=0;
+            int n=0;
+            if(no.length()%2==0){
+
+                String first=no.substring(0,(no.length()/2));
+                System.out.println("first = "+first);
+                String last=no.substring((no.length()/2),no.length());
+                System.out.println("last= "+last);
+
+                for(int b=0;b<first.length();b++){
+                    p+=(first.charAt(b)-'0');
+                     n+=(last.charAt(b)-'0');
+
+                }
+
+               
+
+                if(p==n){
+                    count++;
+                }
+
+            }
+        }
+       return count; 
+    }
+}
+
+******************************************************************************************
