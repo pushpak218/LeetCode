@@ -1,0 +1,231 @@
+1508. Range Sum of Sorted Subarray Sums
+Solved
+Medium
+Topics
+Companies
+Hint
+You are given the array nums consisting of n positive integers. You computed the sum of all non-empty continuous subarrays from the array and then sorted them in non-decreasing order, creating a new array of n * (n + 1) / 2 numbers.
+
+Return the sum of the numbers from index left to index right (indexed from 1), inclusive, in the new array. Since the answer can be a huge number return it modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4], n = 4, left = 1, right = 5
+Output: 13 
+Explanation: All subarray sums are 1, 3, 6, 10, 2, 5, 9, 3, 7, 4. After sorting them in non-decreasing order we have the new array [1, 2, 3, 3, 4, 5, 6, 7, 9, 10]. The sum of the numbers from index le = 1 to ri = 5 is 1 + 2 + 3 + 3 + 4 = 13. 
+Example 2:
+
+Input: nums = [1,2,3,4], n = 4, left = 3, right = 4
+Output: 6
+Explanation: The given array is the same as example 1. We have the new array [1, 2, 3, 3, 4, 5, 6, 7, 9, 10]. The sum of the numbers from index le = 3 to ri = 4 is 3 + 3 = 6.
+Example 3:
+
+Input: nums = [1,2,3,4], n = 4, left = 1, right = 10
+Output: 50
+ 
+
+Constraints:
+
+n == nums.length
+1 <= nums.length <= 1000
+1 <= nums[i] <= 100
+1 <= left <= right <= n * (n + 1) / 2
+
+ans::
+
+class Solution {
+    public int rangeSum(int[] nums, int n, int left, int right) {
+
+          List<Integer> subarraySums = new ArrayList<>();
+        
+        // Generate all possible subarray sums
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += nums[j];
+                subarraySums.add(sum);
+            }
+        }
+        
+        // Sort the list of subarray sums
+        Collections.sort(subarraySums);
+        
+        // Calculate the sum of the numbers from index left to index right (1-indexed)
+        long result = 0;
+        int mod = 1_000_000_007;
+        for (int i = left - 1; i < right; i++) {
+            result = (result + subarraySums.get(i)) % mod;
+        }
+        
+        return (int) result;
+    }
+}
+
+********************************************************
+
+
+1630. Arithmetic Subarrays
+Solved
+Medium
+Topics
+Companies
+Hint
+A sequence of numbers is called arithmetic if it consists of at least two elements, and the difference between every two consecutive elements is the same. More formally, a sequence s is arithmetic if and only if s[i+1] - s[i] == s[1] - s[0] for all valid i.
+
+For example, these are arithmetic sequences:
+
+1, 3, 5, 7, 9
+7, 7, 7, 7
+3, -1, -5, -9
+The following sequence is not arithmetic:
+
+1, 1, 2, 5, 7
+You are given an array of n integers, nums, and two arrays of m integers each, l and r, representing the m range queries, where the ith query is the range [l[i], r[i]]. All the arrays are 0-indexed.
+
+Return a list of boolean elements answer, where answer[i] is true if the subarray nums[l[i]], nums[l[i]+1], ... , nums[r[i]] can be rearranged to form an arithmetic sequence, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: nums = [4,6,5,9,3,7], l = [0,0,2], r = [2,3,5]
+Output: [true,false,true]
+Explanation:
+In the 0th query, the subarray is [4,6,5]. This can be rearranged as [6,5,4], which is an arithmetic sequence.
+In the 1st query, the subarray is [4,6,5,9]. This cannot be rearranged as an arithmetic sequence.
+In the 2nd query, the subarray is [5,9,3,7]. This can be rearranged as [3,5,7,9], which is an arithmetic sequence.
+Example 2:
+
+Input: nums = [-12,-9,-3,-12,-6,15,20,-25,-20,-15,-10], l = [0,1,6,4,8,7], r = [4,4,9,7,9,10]
+Output: [false,true,false,false,true,true]
+ 
+
+Constraints:
+
+n == nums.length
+m == l.length
+m == r.length
+2 <= n <= 500
+1 <= m <= 500
+0 <= l[i] < r[i] < n
+-105 <= nums[i] <= 105
+
+ans::
+
+class Solution {
+    public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        
+      
+        List<Boolean> ans=new ArrayList<>();
+        List<List<Integer>>list=new ArrayList<>();
+        int a=0;
+        while( a<l.length){
+            int start=l[a];
+            int end=r[a];
+        //    int[] arr=new int[(end-start)+1];
+        List<Integer>list1=new ArrayList<>();
+        //      int point=0; 
+            for(int b=start;b<=end;b++){
+                list1.add(nums[b]);
+                Collections.sort(list1);
+            }
+            list.add(list1);
+            a++;
+        }
+        System.out.println(list);
+
+        for(List<Integer> k:list){
+            int sum=k.get(1)-k.get(0);
+            System.out.println(sum);
+            boolean flag=true;
+            
+            for(int b=0;b<k.size()-1;b++){
+                if(k.get(b+1)-k.get(b)!=sum){
+                    flag=false;
+                    break;
+                }
+               
+            }
+             ans.add(flag);
+        }
+      return ans;  
+    }
+}
+
+*******************************************************************************
+
+3232. Find if Digit Game Can Be Won
+Solved
+Easy
+Topics
+Companies
+Hint
+You are given an array of positive integers nums.
+
+Alice and Bob are playing a game. In the game, Alice can choose either all single-digit numbers or all double-digit numbers from nums, and the rest of the numbers are given to Bob. Alice wins if the sum of her numbers is strictly greater than the sum of Bob's numbers.
+
+Return true if Alice can win this game, otherwise, return false.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,4,10]
+
+Output: false
+
+Explanation:
+
+Alice cannot win by choosing either single-digit or double-digit numbers.
+
+Example 2:
+
+Input: nums = [1,2,3,4,5,14]
+
+Output: true
+
+Explanation:
+
+Alice can win by choosing single-digit numbers which have a sum equal to 15.
+
+Example 3:
+
+Input: nums = [5,5,5,25]
+
+Output: true
+
+Explanation:
+
+Alice can win by choosing double-digit numbers which have a sum equal to 25.
+
+
+ans::
+
+class Solution {
+    public boolean canAliceWin(int[] nums) {
+
+        
+
+        int sum1=0;
+        int sum2=0;
+        for(int a=0;a<nums.length;a++){
+            if(nums[a]>9){
+                sum2+=nums[a];
+            }else{
+                sum1+=nums[a];
+            }
+        }
+
+        if(sum1==sum2){
+            return false;
+        }else{
+            return true;
+        }
+
+        
+    }
+}
+
+******************************************************************
